@@ -6,15 +6,13 @@ import math
 def solve_contract() -> float:
     """Solve for high-state consumption in a two-state stochastic contract.
 
-    Uses bisection to match a target lifetime utility under log preferences
+    Uses bisection to match a target lifetime utility under log preferences,
     with a participation (exit) constraint in the high-income state.
     """
     delta = 0.95
     prob = 0.5
     c_low = 0.95
     v0_target = 3.0
-
-    v_aut_high = math.log(1.1) / (1.0 - delta)
 
     def expected_value(c_high: float) -> float:
         if c_high <= 0:
@@ -23,6 +21,8 @@ def solve_contract() -> float:
         return eu / (1.0 - delta)
 
     def exit_constraint(c_high: float) -> bool:
+        # Participation constraint in the high-income state:
+        # requires c_high >= 1.1 (autarky consumption).
         return c_high >= 1.1
 
     tol = 1e-8
@@ -41,6 +41,8 @@ def solve_contract() -> float:
             hi = mid
 
     sol = 0.5 * (lo + hi)
+
+    # Enforce the exit constraint (minimal feasible c_high).
     if not exit_constraint(sol):
         sol = 1.1
 
