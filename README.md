@@ -1,0 +1,129 @@
+# Math + Econ Reasoning Portfolio (NDA-safe excerpts)
+
+This repository contains **carefully selected, NDA-safe excerpts** from a larger body of **math- and economics-based analytical work** used to design, evaluate, and verify **LLM reasoning and numerical reliability**.
+
+The materials here focus on the **final verification layer** of much broader analyses:
+- reduced-form problem statements  
+- distilled numerical cores  
+- deterministic validation logic  
+
+The original tasks were typically **more complex, data-driven, and multi-stage**, but are presented here in **simplified, synthetic form** to remain fully public and NDA-compliant.
+
+This is best viewed as a **portfolio of evaluation artefacts** rather than a full reproduction of the underlying research pipelines.
+
+---
+
+## What this repo demonstrates
+
+- **Non-trivial numerical methods**  
+  (bisection / root-finding, verification inequalities, Monte Carlo sanity checks)
+
+- **Reproducible reference solutions**  
+  with explicit tolerances and deterministic outputs
+
+- **Answer validation & scoring logic**  
+  similar to LLM evaluation / grading pipelines
+
+- **Failure-mode awareness**  
+  (bounds, monotonicity assumptions, bracketing errors, model misspecification)
+
+- **Clean Python engineering**  
+  (tests, CI, no side effects on import, CLI + JSON outputs)
+
+---
+
+## Important context (NDA-safe clarification)
+
+The problems in this repository are **not full research problems** and **not client deliverables**.
+
+They are:
+- **condensed representations** of larger analytical tasks  
+- using **synthetic or normalized parameters**  
+- stripped of proprietary data, domain specifics, and contextual complexity  
+
+In practice, the original tasks:
+- involved richer stochastic structure or real datasets  
+- required additional constraints, diagnostics, and robustness checks  
+- were embedded in broader modeling or evaluation workflows  
+
+What you see here corresponds to the **final reasoning and verification step** — the part most relevant for assessing **LLM numerical reasoning, correctness, and failure behavior**.
+
+---
+
+## Repository structure
+
+- `problems/` — problem statements + failure modes  
+- `src/econ_math_portfolio/models/` — model implementations (no code runs on import)  
+- `validators/` — validators calling model code  
+- `originals/` — original standalone scripts kept for transparency (not imported)  
+- `rubrics/` — scoring rules inspired by LLM evaluation setups  
+- `tests/` — pytest  
+- `.github/workflows/ci.yml` — CI (Python 3.10–3.12)
+
+---
+
+## Quickstart
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+pytest
+python -m econ_math_portfolio list
+```
+
+---
+
+## CLI usage
+
+```bash
+python -m econ_math_portfolio reference credit_var_quantile
+python -m econ_math_portfolio validate cpi_target_discount 0.26191
+```
+
+---
+
+## Notebook demo
+
+```bash
+jupyter notebook notebooks/demo.ipynb
+```
+
+---
+
+## JSON output (tool-calling friendly)
+
+```bash
+python -m econ_math_portfolio list --json
+python -m econ_math_portfolio reference cpi_target_discount --json
+python -m econ_math_portfolio validate cpi_target_discount 0.26191 --json
+```
+
+---
+
+## Scoring rubric (LLM evaluation style)
+
+```bash
+python -m econ_math_portfolio score submissions/contract_good.json --json
+```
+
+Submission format:
+
+```json
+{
+  "task_id": "cpi_target_discount",
+  "answer": 0.26191,
+  "explanation": "optional short explanation"
+}
+```
+
+---
+
+## How to interpret this portfolio
+
+This repository is a **curated slice of real analytical work**, intentionally focused on:
+- reasoning clarity  
+- numerical correctness  
+- verification and evaluation  
+
+The goal is to show **how problems are checked**, not just how they are solved.

@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "scoring": {
+    "max_score": 1.0,
+    "components": {
+      "format": 0.2,
+      "numeric_correctness": 0.7,
+      "reasoning_quality": 0.1
+    }
+  },
+  "tasks": {
+    "contract_stochastic_income": {
+      "expected_format": "float",
+      "tolerance": 1e-06,
+      "require_explanation": false,
+      "notes": [
+        "Constraint check: c_high >= 1.1 (handled by reference)."
+      ]
+    },
+    "hjb_discount_threshold": {
+      "expected_format": "float",
+      "tolerance": 1e-06,
+      "require_explanation": false
+    },
+    "cpi_target_discount": {
+      "expected_format": "float",
+      "tolerance": 1e-05,
+      "require_explanation": false,
+      "bounds": {
+        "min": 0.0,
+        "max": 1.0
+      }
+    },
+    "credit_var_quantile": {
+      "expected_format": "float",
+      "tolerance": 1e-06,
+      "require_explanation": false,
+      "notes": [
+        "Infinitely granular Vasicek portfolio (analytic VaR + MC sanity-check)."
+      ]
+    }
+  }
+}

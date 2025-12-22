@@ -1,0 +1,9 @@
+
+[dev]
+pytest>=8.0
+ruff>=0.8
+mypy>=1.8
+numpy>=2.0
+matplotlib>=3.8
+notebook>=7.0
+pyyaml>=6.0

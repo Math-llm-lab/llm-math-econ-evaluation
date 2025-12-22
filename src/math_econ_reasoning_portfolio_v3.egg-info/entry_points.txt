@@ -1,0 +1,2 @@
+[console_scripts]
+econ-math-portfolio = econ_math_portfolio.cli:main

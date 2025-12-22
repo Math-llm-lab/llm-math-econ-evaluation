@@ -1,0 +1,84 @@
+Metadata-Version: 2.4
+Name: math_econ_reasoning_portfolio_v3
+Version: 0.3.0
+Summary: NDA-safe math + economics reasoning tasks with model-based validators.
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: ruff>=0.8; extra == "dev"
+Requires-Dist: mypy>=1.8; extra == "dev"
+Requires-Dist: numpy>=2.0; extra == "dev"
+Requires-Dist: matplotlib>=3.8; extra == "dev"
+Requires-Dist: notebook>=7.0; extra == "dev"
+Requires-Dist: pyyaml>=6.0; extra == "dev"
+Dynamic: license-file
+
+# Math + Econ Reasoning Portfolio (NDA-safe)
+
+Public portfolio of **math/economics modeling tasks** designed to test **LLM reasoning** and demonstrate:
+- non-trivial numerical methods (bisection/root-finding, verification checks, Monte Carlo sanity checks)
+- reproducible reference solutions
+- validators (numeric checking with tolerances)
+- tests + CI (Python 3.10–3.12)
+
+Tasks are **inspired by real work** but use **synthetic numbers** and are **not copied** from any private system.
+
+## Structure
+- `problems/` — problem statements + failure modes
+- `src/econ_math_portfolio/models/` — model implementations (no code runs on import)
+- `validators/` — validators calling model code
+- `originals/` — your original task scripts kept for transparency (not used by imports)
+- `tests/` — pytest
+- `.github/workflows/ci.yml` — CI
+
+## Quickstart
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -e ".[dev]"
+pytest
+python -m econ_math_portfolio list
+```
+
+## CLI
+```bash
+python -m econ_math_portfolio reference credit_var_quantile
+python -m econ_math_portfolio validate cpi_target_discount 0.26191
+```
+
+## Notebook demo
+Run:
+```bash
+jupyter notebook notebooks/demo.ipynb
+```
+
+## JSON output (tool-calling friendly)
+All commands accept `--json`:
+```bash
+python -m econ_math_portfolio list --json
+python -m econ_math_portfolio reference cpi_target_discount --json
+python -m econ_math_portfolio validate cpi_target_discount 0.26191 --json
+```
+
+
+## Scoring rubric (LLM evaluation style)
+
+This repo includes a lightweight, NDA-safe evaluation layer:
+- `rubrics/rubric.yml` defines format + numeric correctness + (optional) reasoning weighting
+- `score` command grades a submission JSON against the reference answer
+
+Example:
+```bash
+python -m econ_math_portfolio score submissions/contract_good.json --json
+```
+
+Submission JSON schema:
+```json
+{
+  "task_id": "cpi_target_discount",
+  "answer": 0.26191,
+  "explanation": "optional short explanation"
+}
+```

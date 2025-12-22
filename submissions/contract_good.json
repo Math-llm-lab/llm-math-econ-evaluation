@@ -1,0 +1,5 @@
+{
+  "task_id": "contract_stochastic_income",
+  "answer": 1.4209040107314794,
+  "explanation": "Bisection on c_high to match target V0 with log utility; then apply participation constraint."
+}
