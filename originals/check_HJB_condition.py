@@ -16,13 +16,7 @@ def F(rho: float, x: float, y: float, p: float) -> float:
     return (
         rho * (w**gamma)
         + b * p * gamma * y * (w ** (gamma - 1))
-        + 0.5
-        * sigma**2
-        * p**2
-        * gamma
-        * (gamma - 1)
-        * y**2
-        * (w ** (gamma - 2))
+        + 0.5 * sigma**2 * p**2 * gamma * (gamma - 1) * y**2 * (w ** (gamma - 2))
     )
 
 
@@ -31,16 +25,9 @@ def rho_critical(x: float, y: float, p: float) -> float:
     if w <= 0:
         raise ValueError("Wealth must be positive.")
 
-    const = (
-        b * p * gamma * y * (w ** (gamma - 1))
-        + 0.5
-        * sigma**2
-        * p**2
-        * gamma
-        * (gamma - 1)
-        * y**2
-        * (w ** (gamma - 2))
-    )
+    const = b * p * gamma * y * (w ** (gamma - 1)) + 0.5 * sigma**2 * p**2 * gamma * (
+        gamma - 1
+    ) * y**2 * (w ** (gamma - 2))
     return -const / (w**gamma)
 
 
