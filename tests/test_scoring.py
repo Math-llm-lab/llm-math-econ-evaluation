@@ -1,8 +1,8 @@
-import json
+import importlib
 from pathlib import Path
 
 from econ_math_portfolio.scoring import load_rubric, score_submission
-import importlib
+
 
 def test_scoring_correct_answer_scores_high(tmp_path):
     rubric = load_rubric(Path("rubrics/rubric.json"))
@@ -16,6 +16,7 @@ def test_scoring_correct_answer_scores_high(tmp_path):
     )
     assert sb.total >= 0.9
 
+
 def test_scoring_bad_format_scores_zeroish():
     rubric = load_rubric(Path("rubrics/rubric.json"))
     v = importlib.import_module("validators.contract_stochastic_income")
@@ -27,6 +28,7 @@ def test_scoring_bad_format_scores_zeroish():
         rubric=rubric,
     )
     assert sb.total <= 0.2
+
 
 def test_bounds_note_does_not_crash():
     rubric = load_rubric(Path("rubrics/rubric.json"))

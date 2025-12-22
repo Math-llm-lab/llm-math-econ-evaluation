@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 def result(task_id: str, expected: float, tol: float, answer: float) -> dict:
     ok = abs(answer - expected) <= tol
     return {

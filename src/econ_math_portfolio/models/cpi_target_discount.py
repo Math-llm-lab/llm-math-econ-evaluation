@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True)
 class CpiParams:
     EI_a: float = 200.0
@@ -11,11 +12,14 @@ class CpiParams:
     discount_coeff: float = 0.21
     target_cpi: float = 200.0
 
+
 def ei_c(t: float, params: CpiParams) -> float:
     return (params.price_c * (1.0 - params.discount_coeff * t) / params.base_c) * 100.0
 
+
 def cpi(t: float, params: CpiParams) -> float:
     return (params.EI_a + params.EI_b + ei_c(t, params)) / 3.0
+
 
 def solve_t(params: CpiParams, *, lo: float = 0.0, hi: float = 1.0, iters: int = 200) -> float:
     def f(x: float) -> float:

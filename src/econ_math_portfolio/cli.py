@@ -6,16 +6,25 @@ from importlib import import_module
 from pathlib import Path
 from typing import Any
 
-from econ_math_portfolio.scoring import load_submission_json, score_submission, to_json_dict, load_rubric
+from econ_math_portfolio.scoring import (
+    load_rubric,
+    load_submission_json,
+    score_submission,
+    to_json_dict,
+)
+
 
 def _repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
+
 def _validators_dir() -> Path:
     return _repo_root() / "validators"
 
+
 def _load_validator(task_id: str):
     return import_module(f"validators.{task_id}")
+
 
 def _emit(obj: Any, *, as_json: bool) -> None:
     if as_json:
@@ -26,10 +35,12 @@ def _emit(obj: Any, *, as_json: bool) -> None:
         else:
             print(obj)
 
+
 def cmd_list(*, as_json: bool) -> int:
     tasks = sorted([p.stem for p in _validators_dir().glob("*.py") if p.name != "__init__.py"])
     _emit({"tasks": tasks}, as_json=as_json)
     return 0
+
 
 def cmd_reference(task_id: str, *, as_json: bool) -> int:
     v = _load_validator(task_id)
@@ -37,11 +48,13 @@ def cmd_reference(task_id: str, *, as_json: bool) -> int:
     _emit({"task_id": task_id, "reference": value}, as_json=as_json)
     return 0
 
+
 def cmd_validate(task_id: str, answer: float, *, as_json: bool) -> int:
     v = _load_validator(task_id)
     res = v.validate(answer)
     _emit(res, as_json=as_json)
     return 0 if res["ok"] else 2
+
 
 def cmd_score(submission_path: str, *, as_json: bool) -> int:
     sub_path = Path(submission_path)
@@ -67,8 +80,11 @@ def cmd_score(submission_path: str, *, as_json: bool) -> int:
     _emit(out, as_json=as_json)
     return 0 if sb.total >= 0.8 else 2
 
+
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="econ-math-portfolio", description="Math/Econ reasoning tasks + validators.")
+    p = argparse.ArgumentParser(
+        prog="econ-math-portfolio", description="Math/Econ reasoning tasks + validators."
+    )
     p.add_argument("--json", action="store_true", help="Output machine-readable JSON.")
     sub = p.add_subparsers(dest="cmd", required=True)
 

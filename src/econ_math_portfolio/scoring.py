@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
+
 @dataclass(frozen=True)
 class ScoreBreakdown:
     total: float
@@ -13,8 +14,10 @@ class ScoreBreakdown:
     reasoning_score: float
     reasons: list[str]
 
+
 def load_rubric(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
 
 def _coerce_float(x: Any) -> Tuple[Optional[float], str | None]:
     try:
@@ -23,6 +26,7 @@ def _coerce_float(x: Any) -> Tuple[Optional[float], str | None]:
         return float(x), None
     except Exception:
         return None, "answer is not a number"
+
 
 def score_submission(
     *,
@@ -40,7 +44,10 @@ def score_submission(
     task_cfg = rubric["tasks"].get(task_id)
     if task_cfg is None:
         return ScoreBreakdown(
-            total=0.0, format_score=0.0, numeric_score=0.0, reasoning_score=0.0,
+            total=0.0,
+            format_score=0.0,
+            numeric_score=0.0,
+            reasoning_score=0.0,
             reasons=[f"unknown task_id: {task_id}"],
         )
 
@@ -86,8 +93,10 @@ def score_submission(
         reasons=reasons,
     )
 
+
 def load_submission_json(path: Path) -> Dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
 
 def to_json_dict(sb: ScoreBreakdown) -> Dict[str, Any]:
     return {

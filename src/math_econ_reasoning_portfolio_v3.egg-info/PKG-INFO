@@ -12,7 +12,6 @@ Requires-Dist: mypy>=1.8; extra == "dev"
 Requires-Dist: numpy>=2.0; extra == "dev"
 Requires-Dist: matplotlib>=3.8; extra == "dev"
 Requires-Dist: notebook>=7.0; extra == "dev"
-Requires-Dist: pyyaml>=6.0; extra == "dev"
 Dynamic: license-file
 
 # Math + Econ Reasoning Portfolio (NDA-safe)
@@ -66,7 +65,7 @@ python -m econ_math_portfolio validate cpi_target_discount 0.26191 --json
 ## Scoring rubric (LLM evaluation style)
 
 This repo includes a lightweight, NDA-safe evaluation layer:
-- `rubrics/rubric.yml` defines format + numeric correctness + (optional) reasoning weighting
+- `rubrics/rubric.json` defines format + numeric correctness + (optional) reasoning weighting
 - `score` command grades a submission JSON against the reference answer
 
 Example:
