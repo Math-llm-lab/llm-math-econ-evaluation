@@ -21,5 +21,5 @@ jobs:
 
       - name: Scoring smoke-test
         run: |
-          python -m econ_math_portfolio score submissions/contract_good.json --json
-          python -m econ_math_portfolio score submissions/contract_bad_format.json --json || true
+          python -m econ_math_portfolio --json score submissions/contract_good.json
+          python -m econ_math_portfolio --json score submissions/contract_bad_format.json || true
