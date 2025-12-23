@@ -72,6 +72,15 @@ pytest
 python -m econ_math_portfolio list
 ```
 
+## Development
+
+Run linting and tests:
+```bash
+ruff check .
+ruff format --check .
+pytest
+```
+
 ---
 
 ## CLI usage
